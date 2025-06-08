@@ -27,6 +27,8 @@ namespace Auth.API.Domain.Aggregates
             if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentException("First name cannot be empty.", nameof(firstName));
             if (string.IsNullOrWhiteSpace(lastName)) throw new ArgumentException("Last name cannot be empty.", nameof(lastName));
 
+            HashPassword(password);
+
             Id = Guid.NewGuid();
             Username = username;
             Password = password;
