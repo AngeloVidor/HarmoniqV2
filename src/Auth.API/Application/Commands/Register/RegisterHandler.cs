@@ -19,10 +19,18 @@ namespace Auth.API.Application.Commands
 
         public async Task<Guid> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
+            var userEmail = await _userRepository.GetByEmailAsync(request.Email);
+            if (userEmail != null)
+            {
+                throw new InvalidOperationException("Email already exists.");
+            }
+
+            var hashedPassword = User.HashPassword(request.Password);
+
             var user = new User
             (
                 username: request.Username,
-                password: request.Password,
+                hashedPassword: hashedPassword,
                 email: request.Email,
                 firstName: request.FirstName,
                 lastName: request.LastName,

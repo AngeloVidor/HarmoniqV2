@@ -20,20 +20,22 @@ namespace Auth.API.Domain.Aggregates
         public DateTime UpdatedAt { get; private set; }
         public Roles Role { get; private set; }
 
-        public User(string username, string password, string email, string firstName, string lastName, Roles role)
+        protected User() { }
+        
+        public User(string username, string hashedPassword, string email, string firstName, string lastName, Roles role)
         {
+
             if (role == null) throw new ArgumentNullException(nameof(role), "Role cannot be null.");
             if (string.IsNullOrWhiteSpace(username)) throw new ArgumentException("Username cannot be empty.", nameof(username));
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Password cannot be empty.", nameof(password));
+            if (string.IsNullOrWhiteSpace(hashedPassword)) throw new ArgumentException("Password cannot be empty.", nameof(hashedPassword));
             if (string.IsNullOrWhiteSpace(email)) throw new ArgumentException("Email cannot be empty.", nameof(email));
             if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentException("First name cannot be empty.", nameof(firstName));
             if (string.IsNullOrWhiteSpace(lastName)) throw new ArgumentException("Last name cannot be empty.", nameof(lastName));
 
-            HashPassword(password);
 
             Id = Guid.NewGuid();
             Username = username;
-            Password = password;
+            Password = hashedPassword;
             Email = email;
             FirstName = firstName;
             LastName = lastName;

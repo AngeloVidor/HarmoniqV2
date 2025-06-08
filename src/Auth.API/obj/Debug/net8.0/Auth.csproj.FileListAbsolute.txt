@@ -149,3 +149,6 @@ C:\Users\angel\Desktop\HarmoniqV2\src\Auth.API\obj\Debug\net8.0\Auth.genruntimec
 C:\Users\angel\Desktop\HarmoniqV2\src\Auth.API\obj\Debug\net8.0\ref\Auth.dll
 C:\Users\angel\Desktop\HarmoniqV2\src\Auth.API\bin\Debug\net8.0\MediatR.dll
 C:\Users\angel\Desktop\HarmoniqV2\src\Auth.API\bin\Debug\net8.0\MediatR.Contracts.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Auth.API\bin\Debug\net8.0\DotNetEnv.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Auth.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Auth.API\bin\Debug\net8.0\Sprache.dll
