@@ -25,7 +25,8 @@ namespace Auth.API.Application.Commands
                 password: request.Password,
                 email: request.Email,
                 firstName: request.FirstName,
-                lastName: request.LastName
+                lastName: request.LastName,
+                role: request.Role
             );
 
             await _userRepository.AddAsync(user);

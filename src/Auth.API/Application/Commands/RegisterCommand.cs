@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Auth.API.Domain.ValueObjects;
 using MediatR;
 
 namespace Auth.API.Application.Commands
@@ -12,6 +13,7 @@ namespace Auth.API.Application.Commands
         string Password,
         string FirstName,
         string LastName,
-        string Email
+        string Email,
+        Roles Role
     ) : IRequest<Guid>;
 }

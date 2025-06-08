@@ -18,9 +18,11 @@ namespace Auth.API.Domain.Aggregates
         public string LastName { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
+        public Roles Role { get; private set; }
 
-        public User(string username, string password, string email, string firstName, string lastName)
+        public User(string username, string password, string email, string firstName, string lastName, Roles role)
         {
+            if (role == null) throw new ArgumentNullException(nameof(role), "Role cannot be null.");
             if (string.IsNullOrWhiteSpace(username)) throw new ArgumentException("Username cannot be empty.", nameof(username));
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Password cannot be empty.", nameof(password));
             if (string.IsNullOrWhiteSpace(email)) throw new ArgumentException("Email cannot be empty.", nameof(email));
@@ -37,6 +39,7 @@ namespace Auth.API.Domain.Aggregates
             LastName = lastName;
             CreatedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
+            Role = role;
         }
 
         public static string HashPassword(string password)
