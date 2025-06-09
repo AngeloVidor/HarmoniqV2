@@ -10,6 +10,7 @@ using Producer.API.Domain.Interfaces;
 using Producer.API.Infrastructure.Data;
 using Producer.API.Infrastructure.Repositories;
 using Producer.API.Infrastructure.Repositories.Read;
+using Producer.API.Infrastructure.Services;
 using Producer.API.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,16 @@ var jwtSettings = new JwtSettings()
     JWT_DurationInMinutes = int.TryParse(Environment.GetEnvironmentVariable("JWT_DURATION_IN_MINUTES"), out var duration) ? duration : 60
 };
 
+var awsSettings = new AwsSettings()
+{
+    AWS_ACCESS_KEY = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY") ?? throw new ArgumentNullException("AWS_ACCESS_KEY is not set in environment variables."),
+    AWS_SECRET_KEY = Environment.GetEnvironmentVariable("AWS_SECRET_KEY") ?? throw new ArgumentNullException("AWS_SECRET KEY is not set in environment variables."),
+    AWS_REGION = Environment.GetEnvironmentVariable("AWS_REGION") ?? throw new ArgumentNullException("AWS_REGION is not set in environment variables."),
+    AWS_BUCKET_NAME = Environment.GetEnvironmentVariable("AWS_BUCKET_NAME") ?? throw new ArgumentNullException("AWS_S3_BUCKET_NAME is not set in environment variables."),
+};
+
+
+builder.Services.AddSingleton(awsSettings);
 builder.Services.AddSingleton(jwtSettings);
 
 builder.Services.AddControllers();
@@ -69,6 +80,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
 builder.Services.AddScoped<IGetProducer, GetProducer>();
 builder.Services.AddScoped<IGetProducerRepoitory, GetProducerRepository>();
+builder.Services.AddScoped<IImageStorageService, ImageStorageService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(options =>
@@ -105,8 +117,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();      
-app.UseMiddleware<JwtAuthMiddleware>(); 
+app.UseAuthentication();
+app.UseMiddleware<JwtAuthMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

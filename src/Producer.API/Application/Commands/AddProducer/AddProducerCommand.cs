@@ -13,7 +13,9 @@ namespace Producer.API.Application.Commands
         Guid UserId,
         string Name,
         string Description,
-        string Country
+        string Country,
+        string? ImageUrl,
+        IFormFile ImageFile
     ) : IRequest<Guid>;
 
 

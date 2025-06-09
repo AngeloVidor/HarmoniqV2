@@ -6,6 +6,8 @@ C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\Producer.API
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\Producer.API.runtimeconfig.json
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\Producer.API.dll
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\Producer.API.pdb
+C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\AWSSDK.Core.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\AWSSDK.S3.dll
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\Azure.Identity.dll
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\DotNetEnv.dll

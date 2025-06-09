@@ -18,16 +18,18 @@ namespace Producer.API.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IGetProducer _getProducer;
+        private readonly IImageStorageService _imageStorageService;
 
-        public ProducerController(IMediator mediator, IGetProducer getProducer)
+        public ProducerController(IMediator mediator, IGetProducer getProducer, IImageStorageService imageStorageService)
         {
             _mediator = mediator;
             _getProducer = getProducer;
+            _imageStorageService = imageStorageService;
         }
 
         [HttpPost("v2/add")]
         [Authorize(Roles = "Producer")]
-        public async Task<IActionResult> AddProducer([FromBody] AddProducerCommand command)
+        public async Task<IActionResult> AddProducer([FromForm] AddProducerCommand command)
         {
             if (command == null)
             {
@@ -40,7 +42,9 @@ namespace Producer.API.API.Controllers
             {
                 return Unauthorized("User ID is required.");
             }
-            var commandWithUser = command with { UserId = userId };
+
+            string url = await _imageStorageService.UploadImageAsync(command.ImageFile);
+            var commandWithUser = command with { UserId = userId, ImageUrl = url };
 
             try
             {

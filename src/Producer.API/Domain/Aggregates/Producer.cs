@@ -16,8 +16,11 @@ namespace Producer.API.Domain.Aggregates
         public Guid UserId { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
+        public string? ImageUrl { get; set; }
 
-        public Producer(string name, string description, string country, Guid userId)
+        protected Producer() { }
+
+        public Producer(string name, string description, string country, Guid userId, string? imageUrl)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name cannot be empty.", nameof(name));
@@ -35,6 +38,7 @@ namespace Producer.API.Domain.Aggregates
             CreatedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
             UserId = userId;
+            ImageUrl = imageUrl;
         }
 
         public void Update(string name, string description, string country)
