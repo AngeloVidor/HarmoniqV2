@@ -30,9 +30,8 @@ var awsSettings = new AwsSettings()
     AWS_ACCESS_KEY = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY") ?? throw new ArgumentNullException("AWS_ACCESS_KEY is not set in environment variables."),
     AWS_SECRET_KEY = Environment.GetEnvironmentVariable("AWS_SECRET_KEY") ?? throw new ArgumentNullException("AWS_SECRET KEY is not set in environment variables."),
     AWS_REGION = Environment.GetEnvironmentVariable("AWS_REGION") ?? throw new ArgumentNullException("AWS_REGION is not set in environment variables."),
-    AWS_BUCKET_NAME = Environment.GetEnvironmentVariable("AWS_BUCKET_NAME") ?? throw new ArgumentNullException("AWS_S3_BUCKET_NAME is not set in environment variables."),
+    AWS_BUCKET_NAME = Environment.GetEnvironmentVariable("AWS_BUCKET_NAME") ?? throw new ArgumentNullException("AWS_BUCKET_NAME is not set in environment variables."),
 };
-
 
 builder.Services.AddSingleton(awsSettings);
 builder.Services.AddSingleton(jwtSettings);
@@ -76,6 +75,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
 
 builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
 builder.Services.AddScoped<IGetProducer, GetProducer>();
