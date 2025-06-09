@@ -23,12 +23,6 @@ namespace Producer.API.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<Domain.Aggregates.Producer> GetByIdAsync(Guid userId)
-        {
-            return await _dbContext.Producers.FirstOrDefaultAsync(x => x.UserId == userId);
-
-        }
-
         public async Task UpdateAsync(Domain.Aggregates.Producer producer)
         {
             _dbContext.Update(producer);

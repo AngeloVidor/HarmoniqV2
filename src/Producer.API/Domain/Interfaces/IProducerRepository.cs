@@ -9,6 +9,5 @@ namespace Producer.API.Domain.Interfaces
     {
         Task AddAsync(Aggregates.Producer producer);
         Task UpdateAsync(Aggregates.Producer producer);
-        Task<Aggregates.Producer> GetByIdAsync(Guid userId);
     }
 }

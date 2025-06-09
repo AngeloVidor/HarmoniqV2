@@ -10,23 +10,23 @@ namespace Producer.API.Application.Services
     public class GetProducer : IGetProducer
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IProducerRepository _producerRepository;
+        private readonly IGetProducerRepoitory _getProducerRepository;
 
-        public GetProducer(IHttpContextAccessor httpContextAccessor, IProducerRepository producerRepository)
+        public GetProducer(IGetProducerRepoitory getProducerRepository, IHttpContextAccessor httpContextAccessor)
         {
+            _getProducerRepository = getProducerRepository;
             _httpContextAccessor = httpContextAccessor;
-            _producerRepository = producerRepository;
         }
 
         public async Task<Domain.Aggregates.Producer> GetCurrentProducerAsync()
         {
             var httpContext = _httpContextAccessor.HttpContext;
             var user = httpContext?.Items["userId"] as Guid?;
-
+ 
             if (user == null || user == Guid.Empty)
                 throw new UnauthorizedAccessException("User ID not found in context");
 
-            return await _producerRepository.GetByIdAsync(user.Value);
+            return await _getProducerRepository.GetProducerByUserIdAsync(user.Value);
         }
     }
 }

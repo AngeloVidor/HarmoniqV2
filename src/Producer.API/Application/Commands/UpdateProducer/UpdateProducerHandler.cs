@@ -10,15 +10,17 @@ namespace Producer.API.Application.Commands.UpdateProducer
     public class UpdateProducerHandler : IRequestHandler<UpdateProducerCommand, bool>
     {
         private readonly IProducerRepository _producerRepository;
+        private readonly IGetProducerRepoitory _getProducerRepository;
 
-        public UpdateProducerHandler(IProducerRepository producerRepository)
+        public UpdateProducerHandler(IProducerRepository producerRepository, IGetProducerRepoitory getProducerRepository)
         {
             _producerRepository = producerRepository;
+            _getProducerRepository = getProducerRepository;
         }
 
         public async Task<bool> Handle(UpdateProducerCommand request, CancellationToken cancellationToken)
         {
-            var producer = await _producerRepository.GetByIdAsync(request.UserId);
+            var producer = await _getProducerRepository.GetProducerByUserIdAsync(request.UserId);
             if (producer == null)
             {
                 return false;

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Producer.API.Application.Commands;
 using Producer.API.Application.Commands.UpdateProducer;
+using Producer.API.Application.Queries;
 using Producer.API.Domain.Interfaces;
 
 namespace Producer.API.API.Controllers
@@ -80,6 +81,35 @@ namespace Producer.API.API.Controllers
             {
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
+        }
+
+        [HttpGet("v2/get")]
+        public async Task<IActionResult> GetProducer()
+        {
+            try
+            {
+                var producer = await _getProducer.GetCurrentProducerAsync();
+                if (producer == null)
+                {
+                    return NotFound("Producer not found.");
+                }
+                return Ok(producer);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+
+        [HttpGet("v2/getall")]
+        public async Task<ActionResult<IEnumerable<Domain.Aggregates.Producer>>> GetAll()
+        {
+            var result = await _mediator.Send(new GetProducersQuery());
+
+            if (result == null || !result.Any())
+                return NoContent();
+
+            return Ok(result);
         }
     }
 }

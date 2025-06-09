@@ -9,6 +9,7 @@ using Producer.API.Application.Services;
 using Producer.API.Domain.Interfaces;
 using Producer.API.Infrastructure.Data;
 using Producer.API.Infrastructure.Repositories;
+using Producer.API.Infrastructure.Repositories.Read;
 using Producer.API.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -67,6 +68,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
 builder.Services.AddScoped<IGetProducer, GetProducer>();
+builder.Services.AddScoped<IGetProducerRepoitory, GetProducerRepository>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(options =>
