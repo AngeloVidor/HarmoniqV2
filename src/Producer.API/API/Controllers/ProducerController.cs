@@ -6,6 +6,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Producer.API.Application.Commands;
+using Producer.API.Application.Commands.UpdateProducer;
+using Producer.API.Domain.Interfaces;
 
 namespace Producer.API.API.Controllers
 {
@@ -14,10 +16,12 @@ namespace Producer.API.API.Controllers
     public class ProducerController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IGetProducer _getProducer;
 
-        public ProducerController(IMediator mediator)
+        public ProducerController(IMediator mediator, IGetProducer getProducer)
         {
             _mediator = mediator;
+            _getProducer = getProducer;
         }
 
         [HttpPost("v2/add")]
@@ -30,7 +34,6 @@ namespace Producer.API.API.Controllers
             }
 
             Guid userId = HttpContext.Items["userId"] as Guid? ?? Guid.Empty;
-            Console.WriteLine($"User ID from context: {userId}");
 
             if (userId == Guid.Empty)
             {
@@ -42,6 +45,36 @@ namespace Producer.API.API.Controllers
             {
                 var producerId = await _mediator.Send(commandWithUser);
                 return CreatedAtAction(nameof(AddProducer), new { id = producerId }, null);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+
+        [HttpPut("v2/update")]
+        public async Task<IActionResult> UpdateProducer([FromBody] UpdateProducerCommand command)
+        {
+            if (command == null)
+            {
+                return BadRequest("Invalid producer data.");
+            }
+
+            var producer = await _getProducer.GetCurrentProducerAsync();
+            if (producer == null)
+            {
+                return Unauthorized("Producer not found.");
+            }
+            var commandWithUser = command with { ProducerId = producer.Id, UserId = producer.UserId };
+
+            try
+            {
+                var result = await _mediator.Send(commandWithUser);
+                if (result)
+                {
+                    return Ok();
+                }
+                return NotFound("Producer not found.");
             }
             catch (Exception ex)
             {

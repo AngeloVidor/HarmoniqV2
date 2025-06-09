@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.Identity.Client;
 
-namespace Producer.API.Application.Commands
+namespace Producer.API.Application.Commands.UpdateProducer
 {
-    public record AddProducerCommand
+    public record UpdateProducerCommand
     (
         Guid UserId,
+        Guid ProducerId,
         string Name,
         string Description,
         string Country
-    ) : IRequest<Guid>;
-
-
+    ) : IRequest<bool>;
 }

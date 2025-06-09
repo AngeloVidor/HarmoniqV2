@@ -36,5 +36,17 @@ namespace Producer.API.Domain.Aggregates
             UpdatedAt = DateTime.UtcNow;
             UserId = userId;
         }
+
+        public void Update(string name, string description, string country)
+        {
+            if (!string.IsNullOrWhiteSpace(name))
+                Name = name;
+            if (!string.IsNullOrWhiteSpace(description))
+                Description = description;
+            if (!string.IsNullOrWhiteSpace(country))
+                Country = country;
+
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }

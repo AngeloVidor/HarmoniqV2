@@ -1,11 +1,3 @@
-C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.csproj.AssemblyReference.cache
-C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.AssemblyInfoInputs.cache
-C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.AssemblyInfo.cs
-C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.csproj.CoreCompileInputs.cache
-C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.sourcelink.json
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\appsettings.json
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\Producer.API.staticwebassets.endpoints.json
@@ -135,6 +127,14 @@ C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\runtimes\win
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.csproj.AssemblyReference.cache
+C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.AssemblyInfoInputs.cache
+C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.AssemblyInfo.cs
+C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.csproj.CoreCompileInputs.cache
+C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.sourcelink.json
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\scopedcss\bundle\Producer.API.styles.css
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\staticwebassets.development.json
