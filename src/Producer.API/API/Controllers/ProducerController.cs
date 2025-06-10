@@ -70,6 +70,7 @@ namespace Producer.API.API.Controllers
             {
                 return Unauthorized("Producer not found.");
             }
+
             var commandWithUser = command with { ProducerId = producer.Id, UserId = producer.UserId };
 
             try
@@ -77,7 +78,7 @@ namespace Producer.API.API.Controllers
                 var result = await _mediator.Send(commandWithUser);
                 if (result)
                 {
-                    return Ok();
+                    return Ok("Updated");
                 }
                 return NotFound("Producer not found.");
             }
