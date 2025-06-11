@@ -17,10 +17,11 @@ namespace Producer.API.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task AddAsync(Domain.Aggregates.Producer producer)
+        public async Task<bool> AddAsync(Domain.Aggregates.Producer producer)
         {
             await _dbContext.Producers.AddAsync(producer);
-            await _dbContext.SaveChangesAsync();
+            int lines = await _dbContext.SaveChangesAsync();
+            return lines > 0;
         }
 
         public async Task UpdateAsync(Domain.Aggregates.Producer producer)

@@ -153,3 +153,5 @@ C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\refint\Produ
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.pdb
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\Producer.API.genruntimeconfig.cache
 C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\obj\Debug\net8.0\ref\Producer.API.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Producer.API\bin\Debug\net8.0\RabbitMQ.Client.dll

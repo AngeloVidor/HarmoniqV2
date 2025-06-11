@@ -8,6 +8,7 @@ using Producer.API.API.Middlewares;
 using Producer.API.Application.Services;
 using Producer.API.Domain.Interfaces;
 using Producer.API.Infrastructure.Data;
+using Producer.API.Infrastructure.Messaging;
 using Producer.API.Infrastructure.Repositories;
 using Producer.API.Infrastructure.Repositories.Read;
 using Producer.API.Infrastructure.Services;
@@ -81,6 +82,7 @@ builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
 builder.Services.AddScoped<IGetProducer, GetProducer>();
 builder.Services.AddScoped<IGetProducerRepoitory, GetProducerRepository>();
 builder.Services.AddScoped<IImageStorageService, ImageStorageService>();
+builder.Services.AddSingleton<IProducerCreatedEvent, ProducerCreatedEvent>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(options =>

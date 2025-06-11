@@ -152,3 +152,4 @@ C:\Users\angel\Desktop\HarmoniqV2\src\Auth.API\bin\Debug\net8.0\MediatR.Contract
 C:\Users\angel\Desktop\HarmoniqV2\src\Auth.API\bin\Debug\net8.0\DotNetEnv.dll
 C:\Users\angel\Desktop\HarmoniqV2\src\Auth.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\angel\Desktop\HarmoniqV2\src\Auth.API\bin\Debug\net8.0\Sprache.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Auth.API\bin\Debug\net8.0\RabbitMQ.Client.dll
