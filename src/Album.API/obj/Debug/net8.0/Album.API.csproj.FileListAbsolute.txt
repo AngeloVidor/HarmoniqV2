@@ -148,3 +148,6 @@ C:\Users\angel\Desktop\HarmoniqV2\src\Album.API\obj\Debug\net8.0\refint\Album.AP
 C:\Users\angel\Desktop\HarmoniqV2\src\Album.API\obj\Debug\net8.0\Album.API.pdb
 C:\Users\angel\Desktop\HarmoniqV2\src\Album.API\obj\Debug\net8.0\Album.API.genruntimeconfig.cache
 C:\Users\angel\Desktop\HarmoniqV2\src\Album.API\obj\Debug\net8.0\ref\Album.API.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Album.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Album.API\bin\Debug\net8.0\DotNetEnv.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Album.API\bin\Debug\net8.0\Sprache.dll
