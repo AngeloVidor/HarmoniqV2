@@ -13,7 +13,7 @@ namespace Album.API.Domain.Aggregates
         public Guid ProducerId { get; private set; }
         public string Title { get; private set; }
         public string Description { get; private set; }
-        public DateTime UploadedAt { get; private set; }
+        public DateTime AddedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
         public decimal Price { get; private set; }
         public string ImageUrl { get; private set; }
@@ -34,7 +34,7 @@ namespace Album.API.Domain.Aggregates
             ProducerId = producerId;
             Title = title;
             Description = description;
-            UploadedAt = DateTime.UtcNow;
+            AddedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
             Price = price;
             ImageUrl = imageUrl;

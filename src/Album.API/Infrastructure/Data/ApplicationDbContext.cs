@@ -13,7 +13,17 @@ namespace Album.API.Infrastructure.Data
         {
 
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Domain.Aggregates.Album>()
+                .Property(p => p.Price)
+                .HasColumnType("decimal(18,2')");
 
+            base.OnModelCreating(modelBuilder);
+        }
+
+
+        public DbSet<Domain.Aggregates.Album> Albums { get; set; }
         public DbSet<ProducerSnap> ProducerSnapshots { get; set; }
     }
 }

@@ -1,10 +1,13 @@
+using System.Reflection;
 using System.Text;
 using Album.API.API.Middlewares;
+using Album.API.Application.Services;
 using Album.API.Domain.Interfaces;
 using Album.API.Infrastructure.Data;
 using Album.API.Infrastructure.Messaging;
 using Album.API.Infrastructure.Messaging.Background;
 using Album.API.Infrastructure.Repositories;
+using Album.API.Infrastructure.Repositories.Read;
 using Album.API.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +50,10 @@ builder.Services.AddSwaggerGen(c =>
         }
     );
 });
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -55,6 +62,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddSingleton<IHostedService, ServiceBackground>();
 builder.Services.AddScoped<IProducerSnapshotRepository, ProducerSnapshotRepository>();
 builder.Services.AddScoped<IProducerCreatedEvent, ProducerCreatedEvent>();
+builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
+builder.Services.AddScoped<IGetProducerRepository, GetProducerRepository>();
+builder.Services.AddScoped<IGetProducerService, GetProducerService>();
+
 
 
 
