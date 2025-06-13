@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Album.API.Domain.Snapshots;
+using Album.API.Domain.Aggregates;
 
 namespace Album.API.Domain.Interfaces
 {
-    public interface IGetProducerService 
+    public interface IAlbumReaderRepository
     {
-        Task<ProducerSnap> GetProducerByUserId(Guid userId);
+        Task<IEnumerable<Domain.Aggregates.Album>> GetAlbumsAsync();
     }
 }

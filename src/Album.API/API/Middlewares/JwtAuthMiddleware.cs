@@ -25,7 +25,7 @@ namespace Album.API.API.Middlewares
         {
             List<string> PublicRoutes = new List<string>
             {
-
+                "/api/Album/v2/albums"
             };
 
             if (PublicRoutes.Contains(context.Request.Path.Value, StringComparer.OrdinalIgnoreCase))

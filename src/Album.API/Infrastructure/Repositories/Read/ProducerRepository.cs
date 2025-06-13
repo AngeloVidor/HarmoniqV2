@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Album.API.Infrastructure.Repositories.Read
 {
-    public class GetProducerRepository : IGetProducerRepository
+    public class ProducerRepository : IProducerRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public GetProducerRepository(ApplicationDbContext dbContext)
+        public ProducerRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

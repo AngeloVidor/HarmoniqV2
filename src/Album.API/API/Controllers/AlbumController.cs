@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using Album.API.Application.Commands;
 using Album.API.Domain.Interfaces;
@@ -14,12 +15,14 @@ namespace Album.API.API.Controllers
     public class AlbumController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IGetProducerService _getProducerService;
+        private readonly IProducerService _producerService;
+        private readonly IAlbumService _albumService;
 
-        public AlbumController(IMediator mediator, IGetProducerService getProducerService)
+        public AlbumController(IMediator mediator, IProducerService producerService, IAlbumService albumService)
         {
             _mediator = mediator;
-            _getProducerService = getProducerService;
+            _producerService = producerService;
+            _albumService = albumService;
         }
 
         [HttpPost("v2/add")]
@@ -33,7 +36,7 @@ namespace Album.API.API.Controllers
 
             try
             {
-                var producer = await _getProducerService.GetProducerByUserId(userId);
+                var producer = await _producerService.GetProducerByUserId(userId);
 
                 var commandWithProducer = command with { ProducerId = producer.ProducerId };
                 var response = await _mediator.Send(commandWithProducer);
@@ -43,6 +46,20 @@ namespace Album.API.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("v2/albums")]
+        public async Task<IActionResult> GetAlbums()
+        {
+            try
+            {
+                var albums = await _albumService.GetAlbums();
+                return Ok(albums);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
             }
         }
 

@@ -51,7 +51,6 @@ namespace Album.API.Infrastructure.Messaging
                     if (request != null)
                     {
                         var snapshot = new ProducerSnap
-
                         {
                             ProducerId = request.ProducerId,
                             UserId = request.UserId,
@@ -68,10 +67,8 @@ namespace Album.API.Infrastructure.Messaging
                     _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: false);
                 }
             };
-
             _channel.BasicConsume(queue: "producer.created.queue", autoAck: false, consumer: consumer);
             return Task.CompletedTask;
-
         }
     }
 }

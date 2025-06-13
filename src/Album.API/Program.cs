@@ -53,7 +53,6 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
-
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -63,11 +62,10 @@ builder.Services.AddSingleton<IHostedService, ServiceBackground>();
 builder.Services.AddScoped<IProducerSnapshotRepository, ProducerSnapshotRepository>();
 builder.Services.AddScoped<IProducerCreatedEvent, ProducerCreatedEvent>();
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
-builder.Services.AddScoped<IGetProducerRepository, GetProducerRepository>();
-builder.Services.AddScoped<IGetProducerService, GetProducerService>();
-
-
-
+builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
+builder.Services.AddScoped<IProducerService, ProducerService>();
+builder.Services.AddScoped<IAlbumReaderRepository, AlbumReaderRepository>();
+builder.Services.AddScoped<IAlbumService, AlbumService>();
 
 
 var jwtSettings = new JwtSettings()
@@ -80,13 +78,11 @@ var jwtSettings = new JwtSettings()
 
 builder.Services.AddSingleton(jwtSettings);
 
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
+}).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -111,13 +107,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseMiddleware<JwtAuthMiddleware>();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

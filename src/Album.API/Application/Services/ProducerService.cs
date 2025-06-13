@@ -7,21 +7,21 @@ using Album.API.Domain.Snapshots;
 
 namespace Album.API.Application.Services
 {
-    public class GetProducerService : IGetProducerService
+    public class ProducerService : IProducerService
     {
-        private readonly IGetProducerRepository _getProducerRepository;
+        private readonly IProducerRepository _producerRepository;
 
-        public GetProducerService(IGetProducerRepository getProducerRepository)
+        public ProducerService(IProducerRepository producerRepository)
         {
-            _getProducerRepository = getProducerRepository;
+            _producerRepository = producerRepository;
         }
 
         public async Task<ProducerSnap> GetProducerByUserId(Guid userId)
         {
             if (userId == Guid.Empty)
                 throw new ArgumentNullException(nameof(userId), "userId cannot be Guid.Empty");
-                
-            return await _getProducerRepository.GetProducerByUserId(userId);
+
+            return await _producerRepository.GetProducerByUserId(userId);
         }
     }
 }

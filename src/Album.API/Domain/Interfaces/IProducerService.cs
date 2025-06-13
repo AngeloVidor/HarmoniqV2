@@ -6,7 +6,7 @@ using Album.API.Domain.Snapshots;
 
 namespace Album.API.Domain.Interfaces
 {
-    public interface IGetProducerRepository
+    public interface IProducerService 
     {
         Task<ProducerSnap> GetProducerByUserId(Guid userId);
     }
