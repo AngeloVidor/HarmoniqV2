@@ -27,5 +27,10 @@ namespace Album.API.Infrastructure.Repositories.Read
         {
             return await _dbContext.Albums.ToListAsync();
         }
+
+        public async Task<IEnumerable<Domain.Aggregates.Album>> GetMyAlbums(Guid producerId)
+        {
+            return await _dbContext.Albums.Where(x => x.ProducerId == producerId).ToListAsync();
+        }
     }
 }

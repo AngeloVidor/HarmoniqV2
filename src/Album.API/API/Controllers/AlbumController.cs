@@ -7,6 +7,7 @@ using Album.API.Application.Commands;
 using Album.API.Application.Queries;
 using Album.API.Domain.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Album.API.API.Controllers
@@ -67,6 +68,7 @@ namespace Album.API.API.Controllers
         }
 
         [HttpGet("v2/{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetById(Guid id)
         {
             try
@@ -83,6 +85,32 @@ namespace Album.API.API.Controllers
                 return StatusCode(500, new { message = "Interal error server" });
             }
         }
+        [HttpGet("v2/myAlbums")]
+        public async Task<IActionResult> GetMyAlbums()
+        {
+            if (!HttpContext.Items.TryGetValue("userId", out var userIdObj) || userIdObj is not Guid userId || userId == Guid.Empty)
+                return BadRequest("User is not authenticated.");
+
+            try
+            {
+                var query = new GetMyAlbumsQuery(userId);
+                var result = await _mediator.Send(query);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Something went wrong.");
+            }
+        }
+
 
     }
 }

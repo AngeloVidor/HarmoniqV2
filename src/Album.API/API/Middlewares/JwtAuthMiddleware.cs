@@ -23,15 +23,10 @@ namespace Album.API.API.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-            List<string> PublicRoutes = new List<string>
-            {
-                "/api/Album/v2/albums",
-                "/api/album/v2/"
-            };
+            var path = context.Request.Path.Value?.ToLower();
 
-            var path = context.Request.Path.Value;
-
-            if (PublicRoutes.Any(route => path.StartsWith(route, StringComparison.OrdinalIgnoreCase)))
+            if (path.StartsWith("/api/album/v2/albums") || 
+                (path.StartsWith("/api/album/v2/") && Guid.TryParse(path.Split("/").Last(), out _)))
             {
                 await _next(context);
                 return;
@@ -71,7 +66,6 @@ namespace Album.API.API.Middlewares
                 if (string.IsNullOrEmpty(secretKey)) throw new Exception("JWT Secret Key is not configured");
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-                var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                 var tokenValidationParameters = new TokenValidationParameters
                 {

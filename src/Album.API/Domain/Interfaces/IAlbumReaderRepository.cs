@@ -10,5 +10,7 @@ namespace Album.API.Domain.Interfaces
     {
         Task<IEnumerable<Domain.Aggregates.Album>> GetAlbumsAsync();
         Task<Domain.Aggregates.Album> GetAlbumByIdAsync(Guid id);
+
+        Task<IEnumerable<Domain.Aggregates.Album>> GetMyAlbums(Guid producerId);
     }
 }
