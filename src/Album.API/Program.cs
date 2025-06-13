@@ -65,7 +65,6 @@ builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
 builder.Services.AddScoped<IProducerService, ProducerService>();
 builder.Services.AddScoped<IAlbumReaderRepository, AlbumReaderRepository>();
-builder.Services.AddScoped<IAlbumService, AlbumService>();
 
 
 var jwtSettings = new JwtSettings()

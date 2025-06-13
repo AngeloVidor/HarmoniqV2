@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Album.API.Application.Commands;
+using Album.API.Application.Queries;
 using Album.API.Domain.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +17,11 @@ namespace Album.API.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IProducerService _producerService;
-        private readonly IAlbumService _albumService;
 
-        public AlbumController(IMediator mediator, IProducerService producerService, IAlbumService albumService)
+        public AlbumController(IMediator mediator, IProducerService producerService)
         {
             _mediator = mediator;
             _producerService = producerService;
-            _albumService = albumService;
         }
 
         [HttpPost("v2/add")]
@@ -54,8 +53,8 @@ namespace Album.API.API.Controllers
         {
             try
             {
-                var albums = await _albumService.GetAlbums();
-                return Ok(albums);
+                var result = await _mediator.Send(new GetAlbumsQuery());
+                return Ok(result);
             }
             catch (Exception ex)
             {
