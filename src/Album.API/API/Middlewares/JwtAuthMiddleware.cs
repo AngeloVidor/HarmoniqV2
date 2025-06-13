@@ -25,18 +25,26 @@ namespace Album.API.API.Middlewares
         {
             List<string> PublicRoutes = new List<string>
             {
-                "/api/Album/v2/albums"
+                "/api/Album/v2/albums",
+                "/api/album/v2/"
             };
 
-            if (PublicRoutes.Contains(context.Request.Path.Value, StringComparer.OrdinalIgnoreCase))
+            var path = context.Request.Path.Value;
+
+            if (PublicRoutes.Any(route => path.StartsWith(route, StringComparison.OrdinalIgnoreCase)))
             {
                 await _next(context);
                 return;
             }
 
-            var tokenAccess = context.Request.Headers["Authorization"].FirstOrDefault().Split(" ")[1];
-            if (string.IsNullOrEmpty(tokenAccess)) throw new Exception("Token not provided");
+            var authHeader = context.Request.Headers["Authorization"].FirstOrDefault();
 
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+            {
+                throw new Exception("Token not provided");
+            }
+
+            var tokenAccess = authHeader.Split(" ")[1];
 
             var isValid = ValidateToken(tokenAccess);
             if (!isValid) throw new Exception("Invalid token");

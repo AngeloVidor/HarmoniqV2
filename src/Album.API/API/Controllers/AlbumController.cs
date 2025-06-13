@@ -66,5 +66,23 @@ namespace Album.API.API.Controllers
             }
         }
 
+        [HttpGet("v2/{id}")]
+        public async Task<ActionResult> GetById(Guid id)
+        {
+            try
+            {
+                var album = await _mediator.Send(new Application.Queries.GetAlbumByIdQuery(id));
+                return Ok(album);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new { message = "Interal error server" });
+            }
+        }
+
     }
 }

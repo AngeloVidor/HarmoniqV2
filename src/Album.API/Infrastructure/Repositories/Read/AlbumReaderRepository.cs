@@ -18,6 +18,11 @@ namespace Album.API.Infrastructure.Repositories.Read
             _dbContext = dbContext;
         }
 
+        public async Task<Domain.Aggregates.Album> GetAlbumByIdAsync(Guid id)
+        {
+            return await _dbContext.Albums.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<IEnumerable<Domain.Aggregates.Album>> GetAlbumsAsync()
         {
             return await _dbContext.Albums.ToListAsync();

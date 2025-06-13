@@ -9,5 +9,6 @@ namespace Album.API.Domain.Interfaces
     public interface IAlbumReaderRepository
     {
         Task<IEnumerable<Domain.Aggregates.Album>> GetAlbumsAsync();
+        Task<Domain.Aggregates.Album> GetAlbumByIdAsync(Guid id);
     }
 }
