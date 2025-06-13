@@ -8,6 +8,7 @@ using Album.API.Infrastructure.Messaging;
 using Album.API.Infrastructure.Messaging.Background;
 using Album.API.Infrastructure.Repositories;
 using Album.API.Infrastructure.Repositories.Read;
+using Album.API.Infrastructure.Services;
 using Album.API.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -65,7 +66,7 @@ builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
 builder.Services.AddScoped<IProducerService, ProducerService>();
 builder.Services.AddScoped<IAlbumReaderRepository, AlbumReaderRepository>();
-
+builder.Services.AddScoped<IImageStorageService, ImageStorageService>();
 
 var jwtSettings = new JwtSettings()
 {
@@ -75,6 +76,15 @@ var jwtSettings = new JwtSettings()
     JWT_DurationInMinutes = int.TryParse(Environment.GetEnvironmentVariable("JWT_DurationInMinutes"), out var duration) ? duration : 60
 };
 
+var awsSettings = new AwsSettings
+{
+    AWS_ACCESS_KEY = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY") ?? throw new ArgumentException("AWS_ACESS_KEY is not set in environment variables"),
+    AWS_SECRET_KEY = Environment.GetEnvironmentVariable("AWS_SECRET_KEY") ?? throw new ArgumentException("AWS_SECRET_KEY is not set in environment variables"),
+    AWS_REGION = Environment.GetEnvironmentVariable("AWS_REGION") ?? throw new ArgumentException("AWS_REGION is not set in environment variables"),
+    AWS_BUCKET_NAME = Environment.GetEnvironmentVariable("AWS_BUCKET_NAME") ?? throw new ArgumentException("AWS_BUCKET_NAME is not set in environment variables"),
+};
+
+builder.Services.AddSingleton(awsSettings);
 builder.Services.AddSingleton(jwtSettings);
 
 builder.Services.AddAuthentication(options =>
@@ -95,7 +105,6 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };
 });
-
 
 var app = builder.Build();
 

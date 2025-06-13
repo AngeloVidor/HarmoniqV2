@@ -153,3 +153,5 @@ C:\Users\angel\Desktop\HarmoniqV2\src\Album.API\bin\Debug\net8.0\DotNetEnv.dll
 C:\Users\angel\Desktop\HarmoniqV2\src\Album.API\bin\Debug\net8.0\Sprache.dll
 C:\Users\angel\Desktop\HarmoniqV2\src\Album.API\bin\Debug\net8.0\MediatR.dll
 C:\Users\angel\Desktop\HarmoniqV2\src\Album.API\bin\Debug\net8.0\MediatR.Contracts.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Album.API\bin\Debug\net8.0\AWSSDK.Core.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Album.API\bin\Debug\net8.0\AWSSDK.S3.dll

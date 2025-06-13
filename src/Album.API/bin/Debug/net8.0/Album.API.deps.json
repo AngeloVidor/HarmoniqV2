@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "Album.API/1.0.0": {
         "dependencies": {
+          "AWSSDK.S3": "4.0.1.6",
           "DotNetEnv": "3.1.1",
           "MediatR": "12.5.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.0",
@@ -22,6 +23,25 @@
         },
         "runtime": {
           "Album.API.dll": {}
+        }
+      },
+      "AWSSDK.Core/4.0.0.10": {
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.10"
+          }
+        }
+      },
+      "AWSSDK.S3/4.0.1.6": {
+        "dependencies": {
+          "AWSSDK.Core": "4.0.0.10"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.S3.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.1.6"
+          }
         }
       },
       "Azure.Core/1.38.0": {
@@ -1679,6 +1699,20 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AWSSDK.Core/4.0.0.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-oZ26B8h/oEI7jbJ0FC976fFTPcRg+k7ZdqFVBQgRYHmmgp7+AYYi23CGJXrKGNFvO7aDpDh8x2pPdx/0CQ/TWw==",
+      "path": "awssdk.core/4.0.0.10",
+      "hashPath": "awssdk.core.4.0.0.10.nupkg.sha512"
+    },
+    "AWSSDK.S3/4.0.1.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LT3tIq7/99Lm9JJ+gsGcyZThEponArRmALgNM3BLEIRLX1ZVWesXucXlrtAXnLwrdr3+8LbfiJ6EVYPtSPxvDw==",
+      "path": "awssdk.s3/4.0.1.6",
+      "hashPath": "awssdk.s3.4.0.1.6.nupkg.sha512"
     },
     "Azure.Core/1.38.0": {
       "type": "package",

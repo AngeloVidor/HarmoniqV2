@@ -26,6 +26,8 @@ namespace Album.API.Application.Commands
                 request.Price,
                 request.ImageUrl
             );
+
+
             await _albumRepository.AddAsync(album);
             return album.Id;
         }

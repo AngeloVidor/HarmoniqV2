@@ -29,7 +29,6 @@ namespace Album.API.Domain.Aggregates
             if (string.IsNullOrEmpty(imageUrl))
                 throw new InvalidOperationException("Image is required");
 
-
             Id = Guid.NewGuid();
             ProducerId = producerId;
             Title = title;
@@ -39,6 +38,5 @@ namespace Album.API.Domain.Aggregates
             Price = price;
             ImageUrl = imageUrl;
         }
-
     }
 }

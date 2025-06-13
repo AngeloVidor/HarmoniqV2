@@ -17,15 +17,17 @@ namespace Album.API.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IProducerService _producerService;
+        private readonly IImageStorageService _imageStorage;
 
-        public AlbumController(IMediator mediator, IProducerService producerService)
+        public AlbumController(IMediator mediator, IProducerService producerService, IImageStorageService imageStorage)
         {
             _mediator = mediator;
             _producerService = producerService;
+            _imageStorage = imageStorage;
         }
 
         [HttpPost("v2/add")]
-        public async Task<IActionResult> AddAlbum(AddAlbumCommand command)
+        public async Task<IActionResult> AddAlbum([FromForm] AddAlbumCommand command)
         {
             if (command == null)
                 return BadRequest("Invalid album data.");
@@ -37,7 +39,9 @@ namespace Album.API.API.Controllers
             {
                 var producer = await _producerService.GetProducerByUserId(userId);
 
-                var commandWithProducer = command with { ProducerId = producer.ProducerId };
+                string url = await _imageStorage.UploadImageAsync(command.image);
+
+                var commandWithProducer = command with { ProducerId = producer.ProducerId, ImageUrl = url };
                 var response = await _mediator.Send(commandWithProducer);
 
                 return Ok(new { id = response });

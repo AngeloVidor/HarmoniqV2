@@ -12,9 +12,7 @@ namespace Album.API.Application.Commands
         string Title,
         string Description,
         decimal Price,
-        string ImageUrl
-
+        string ImageUrl,
+        IFormFile image
     ) : IRequest<Guid>;
-
-
 }
