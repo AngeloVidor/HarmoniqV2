@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Album.API.Application.Commands;
 using Album.API.Application.Queries;
+using Album.API.Domain.Exceptions;
 using Album.API.Domain.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -61,6 +62,10 @@ namespace Album.API.API.Controllers
                 var result = await _mediator.Send(new GetAlbumsQuery());
                 return Ok(result);
             }
+            catch (AlbumNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
@@ -76,7 +81,7 @@ namespace Album.API.API.Controllers
                 var album = await _mediator.Send(new Application.Queries.GetAlbumByIdQuery(id));
                 return Ok(album);
             }
-            catch (KeyNotFoundException ex)
+            catch (AlbumNotFoundException ex)
             {
                 return NotFound(new { message = ex.Message });
             }
@@ -97,17 +102,17 @@ namespace Album.API.API.Controllers
                 var result = await _mediator.Send(query);
                 return Ok(result);
             }
-            catch (KeyNotFoundException ex)
+            catch (ProducerNotFoundException ex)
             {
-                return NotFound(ex.Message);
+                return NotFound(new { message = ex.Message });
             }
-            catch (InvalidOperationException ex)
+            catch (AlbumsNotFoundException ex)
             {
-                return NotFound(ex.Message);
+                return NotFound(new { message = ex.Message });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Something went wrong.");
+                return StatusCode(500, new { message = ex.Message });
             }
         }
 

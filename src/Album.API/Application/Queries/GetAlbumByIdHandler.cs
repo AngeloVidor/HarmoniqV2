@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Album.API.API.DTOs;
+using Album.API.Domain.Exceptions;
 using Album.API.Domain.Interfaces;
 using MediatR;
 
@@ -32,7 +33,7 @@ namespace Album.API.Application.Queries
             };
 
             if (album == null)
-                throw new KeyNotFoundException($"Album with id {request.id} not found");
+                throw new AlbumNotFoundException();
 
             return albumDto;
         }

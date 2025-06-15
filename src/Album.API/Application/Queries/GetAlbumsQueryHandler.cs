@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Album.API.API.DTOs;
+using Album.API.Domain.Exceptions;
 using Album.API.Domain.Interfaces;
 using MediatR;
 
@@ -20,7 +21,7 @@ namespace Album.API.Application.Queries
         public async Task<IEnumerable<AlbumDto>> Handle(GetAlbumsQuery request, CancellationToken cancellationToken)
         {
             var data = await _repository.GetAlbumsAsync();
-            if (data == null || !data.Any()) throw new InvalidOperationException("No albums found");
+            if (data == null || !data.Any()) throw new AlbumNotFoundException();
 
             return data.Select(album => new AlbumDto
             {

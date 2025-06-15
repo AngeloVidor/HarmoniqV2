@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Album.API.API.DTOs;
+using Album.API.Domain.Exceptions;
 using Album.API.Domain.Interfaces;
 using MediatR;
 
@@ -23,11 +24,11 @@ namespace Album.API.Application.Queries
         {
             var producer = await _producerService.GetProducerByUserId(request.userId);
             if (producer == null)
-                throw new KeyNotFoundException("Producer not found");
+                throw new ProducerNotFoundException();
 
             var albums = await _albumReader.GetMyAlbums(producer.ProducerId);
             if (albums == null || !albums.Any())
-                throw new InvalidOperationException($"No albums found to {producer.ProducerId}");
+                throw new AlbumsNotFoundException();
 
             var response = albums.Select(album => new AlbumDto
             {
