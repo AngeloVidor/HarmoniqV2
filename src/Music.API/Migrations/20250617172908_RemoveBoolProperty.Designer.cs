@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Music.API.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Music.API.Infrastructure.Data;
 namespace Music.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250617172908_RemoveBoolProperty")]
+    partial class RemoveBoolProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,7 +97,7 @@ namespace Music.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProducerSnapshots", (string)null);
+                    b.ToTable("ProducerSnapshots");
                 });
 #pragma warning restore 612, 618
         }

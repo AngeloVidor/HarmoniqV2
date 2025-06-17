@@ -20,6 +20,10 @@ namespace Album.API.Application.Services
         {
             if (userId == Guid.Empty)
                 throw new ArgumentNullException(nameof(userId), "userId cannot be Guid.Empty");
+            Console.WriteLine(userId);
+            Console.WriteLine(userId);
+            Console.WriteLine(userId);
+            Console.WriteLine(userId);
 
             return await _producerRepository.GetProducerByUserId(userId);
         }

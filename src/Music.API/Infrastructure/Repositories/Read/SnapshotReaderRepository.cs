@@ -20,7 +20,10 @@ namespace Music.API.Infrastructure.Repositories.Read
 
         public async Task<Producer> GetProducerByUserIdAsync(Guid userId)
         {
-            return await _dbContext.ProducerSnapshots.FirstOrDefaultAsync(x => x.UserId == userId);
+            var all = await _dbContext.ProducerSnapshots.ToListAsync();
+
+            return await _dbContext.ProducerSnapshots
+                .FirstOrDefaultAsync(x => x.UserId == userId);
         }
     }
 }

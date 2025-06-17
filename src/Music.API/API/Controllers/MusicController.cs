@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Music.API.Application.Commands;
 using Music.API.Application.Queries;
+using Music.API.Domain.Exceptions;
 
 namespace Music.API.API.Controllers
 {
@@ -39,6 +40,14 @@ namespace Music.API.API.Controllers
             {
                 var musicId = await _mediator.Send(commandWithUser);
                 return Created("", new { id = musicId });
+            }
+            catch (ProducerNotFoundException ex)
+            {
+                return BadRequest(new { message = ex.Message }); 
+            }
+            catch (AlbumNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
             }
             catch (Exception ex)
             {

@@ -40,6 +40,8 @@ namespace Album.API.API.Controllers
             try
             {
                 var producer = await _producerService.GetProducerByUserId(userId);
+                if (producer == null)
+                    return BadRequest("producer not found");
 
                 string url = await _imageStorage.UploadImageAsync(command.image);
 

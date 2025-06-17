@@ -21,6 +21,7 @@ namespace Album.API.Application.Commands
 
         public async Task<Guid> Handle(AddAlbumCommand request, CancellationToken cancellationToken)
         {
+
             var album = new Domain.Aggregates.Album
             (
                 request.ProducerId,

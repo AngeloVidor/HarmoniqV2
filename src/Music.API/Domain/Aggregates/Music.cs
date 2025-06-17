@@ -12,20 +12,18 @@ namespace Music.API.Domain.Aggregates
         [Key]
         public Guid Id { get; set; }
         public Guid ProducerId { get; set; }
-        public Guid? AlbumId { get; set; }
-        public bool IsPartOfAlbum { get; set; }
+        public Guid AlbumId { get; set; }
         public string? ImageUrl { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime UploadedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
-        public Music(Guid producerId, Guid? albumId, bool isPartOfAlbum, string? imageUrl, string title, string description)
+        public Music(Guid producerId, Guid albumId, string? imageUrl, string title, string description)
         {
             Id = Guid.NewGuid();
             ProducerId = producerId;
             AlbumId = albumId;
-            IsPartOfAlbum = isPartOfAlbum;
             ImageUrl = imageUrl;
             Title = title;
             Description = description;

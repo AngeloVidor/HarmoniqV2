@@ -19,7 +19,8 @@ namespace Music.API.Application.Queries
 
         public async Task<Producer> Handle(GetProducerByUserIdQuery request, CancellationToken cancellationToken)
         {
-            return await _readerRepository.GetProducerByUserIdAsync(request.userId);
+            var producer = await _readerRepository.GetProducerByUserIdAsync(request.userId);
+            return producer;
         }
     }
 }

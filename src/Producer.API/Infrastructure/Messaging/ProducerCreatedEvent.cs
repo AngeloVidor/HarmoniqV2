@@ -21,8 +21,7 @@ namespace Producer.API.Infrastructure.Messaging
             _channel = _connection.CreateModel();
 
             _channel.ExchangeDeclare(exchange: "v2h.producer", type: ExchangeType.Direct, durable: true, autoDelete: false, arguments: null);
-            _channel.QueueDeclare(queue: "producer.created.queue", durable: true, exclusive: false, autoDelete: false, arguments: null);
-            _channel.QueueBind(queue: "producer.created.queue", exchange: "v2h.producer", routingKey: "producer.created");
+
         }
 
         public Task Publish(Guid producerId, Guid userId, string name)

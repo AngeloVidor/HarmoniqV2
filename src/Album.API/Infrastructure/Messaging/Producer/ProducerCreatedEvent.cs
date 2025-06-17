@@ -26,8 +26,8 @@ namespace Album.API.Infrastructure.Messaging
             _channel = _connection.CreateModel();
 
             _channel.ExchangeDeclare(exchange: "v2h.producer", type: ExchangeType.Direct, durable: true, autoDelete: false, arguments: null);
-            _channel.QueueDeclare(queue: "producer.created.queue", durable: true, exclusive: false, autoDelete: false, arguments: null);
-            _channel.QueueBind(queue: "producer.created.queue", exchange: "v2h.producer", routingKey: "producer.created");
+            _channel.QueueDeclare(queue: "producer.created.album.queue", durable: true, exclusive: false, autoDelete: false);
+            _channel.QueueBind(queue: "producer.created.album.queue", exchange: "v2h.producer", routingKey: "producer.created");
 
             _serviceScopeFactory = serviceScopeFactory;
         }
@@ -67,7 +67,7 @@ namespace Album.API.Infrastructure.Messaging
                     _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: false);
                 }
             };
-            _channel.BasicConsume(queue: "producer.created.queue", autoAck: false, consumer: consumer);
+            _channel.BasicConsume(queue: "producer.created.album.queue", autoAck: false, consumer: consumer);
             return Task.CompletedTask;
         }
     }

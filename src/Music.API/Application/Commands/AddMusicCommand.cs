@@ -9,9 +9,8 @@ namespace Music.API.Application.Commands
     public record AddMusicCommand
     (
         Guid ProducerId,
-        Guid? AlbumId,
+        Guid AlbumId,
         Guid UserId,
-        bool IsPartOfAlbum,
         string Title,
         string Description,
         string? ImageUrl
