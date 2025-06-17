@@ -5,6 +5,7 @@ using Album.API.Application.Services;
 using Album.API.Domain.Interfaces;
 using Album.API.Infrastructure.Data;
 using Album.API.Infrastructure.Messaging;
+using Album.API.Infrastructure.Messaging.Album;
 using Album.API.Infrastructure.Messaging.Background;
 using Album.API.Infrastructure.Repositories;
 using Album.API.Infrastructure.Repositories.Read;
@@ -67,6 +68,7 @@ builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
 builder.Services.AddScoped<IProducerService, ProducerService>();
 builder.Services.AddScoped<IAlbumReaderRepository, AlbumReaderRepository>();
 builder.Services.AddScoped<IImageStorageService, ImageStorageService>();
+builder.Services.AddSingleton<IAlbumCreatedEvent, AlbumCreatedEvent>();
 
 var jwtSettings = new JwtSettings()
 {

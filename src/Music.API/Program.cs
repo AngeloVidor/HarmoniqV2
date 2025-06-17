@@ -8,6 +8,7 @@ using Music.API.API.Middlewares;
 using Music.API.Domain.Interfaces;
 using Music.API.Infrastructure.Data;
 using Music.API.Infrastructure.Messaging;
+using Music.API.Infrastructure.Messaging.Album;
 using Music.API.Infrastructure.Messaging.Background;
 using Music.API.Infrastructure.Repositories.Read;
 using Music.API.Infrastructure.Repositories.Write;
@@ -90,7 +91,9 @@ builder.Services.AddScoped<IMusicRepository, MusicRepository>();
 builder.Services.AddScoped<ISnapshotRepository, SnapshotRepository>();
 builder.Services.AddScoped<IProducerCreatedEvent, ProducerCreatedEvent>();
 builder.Services.AddScoped<ISnapshotReaderRepository, SnapshotReaderRepository>();
-
+builder.Services.AddSingleton<IHostedService, AlbumCreatedConsumerBackground>();
+builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
+builder.Services.AddScoped<IAlbumCreatedEvent, AlbumCreatedEvent>();
 
 builder.Services.AddSingleton(jwtSettings);
 

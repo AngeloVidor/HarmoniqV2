@@ -16,7 +16,7 @@ namespace Music.API.Infrastructure.Data
 
         public DbSet<Domain.Aggregates.Music> Musics { get; set; }
         public DbSet<Producer> ProducerSnapshots { get; set; }
-
+        public DbSet<Album> AlbumSnapshots { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

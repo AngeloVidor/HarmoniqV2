@@ -8,20 +8,19 @@ using Music.API.Infrastructure.Data;
 
 namespace Music.API.Infrastructure.Repositories.Write
 {
-    public class SnapshotRepository : ISnapshotRepository
+    public class AlbumRepository : IAlbumRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public SnapshotRepository(ApplicationDbContext dbContext)
+        public AlbumRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task SaveAsync(Producer producer)
+        public async Task SaveAsync(Album album)
         {
-            await _dbContext.ProducerSnapshots.AddAsync(producer);
+            await _dbContext.AlbumSnapshots.AddAsync(album);
             await _dbContext.SaveChangesAsync();
         }
-
     }
 }
