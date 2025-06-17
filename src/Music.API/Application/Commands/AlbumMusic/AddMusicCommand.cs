@@ -13,7 +13,8 @@ namespace Music.API.Application.Commands
         Guid UserId,
         string Title,
         string Description,
-        string? ImageUrl
+        string? ImageUrl,
+        IFormFile Image
     ) : IRequest<Guid>;
 
 

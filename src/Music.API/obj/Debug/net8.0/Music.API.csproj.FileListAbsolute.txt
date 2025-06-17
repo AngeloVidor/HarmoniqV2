@@ -153,3 +153,5 @@ C:\Users\angel\Desktop\HarmoniqV2\src\Music.API\obj\Debug\net8.0\refint\Music.AP
 C:\Users\angel\Desktop\HarmoniqV2\src\Music.API\obj\Debug\net8.0\Music.API.pdb
 C:\Users\angel\Desktop\HarmoniqV2\src\Music.API\obj\Debug\net8.0\Music.API.genruntimeconfig.cache
 C:\Users\angel\Desktop\HarmoniqV2\src\Music.API\obj\Debug\net8.0\ref\Music.API.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Music.API\bin\Debug\net8.0\AWSSDK.Core.dll
+C:\Users\angel\Desktop\HarmoniqV2\src\Music.API\bin\Debug\net8.0\AWSSDK.S3.dll

@@ -12,6 +12,7 @@ using Music.API.Infrastructure.Messaging.Album;
 using Music.API.Infrastructure.Messaging.Background;
 using Music.API.Infrastructure.Repositories.Read;
 using Music.API.Infrastructure.Repositories.Write;
+using Music.API.Infrastructure.Services;
 using Music.API.Models;
 
 DotNetEnv.Env.Load();
@@ -67,6 +68,14 @@ var jwtSettings = new JwtSettings()
     JWT_DurationInMinutes = int.TryParse(Environment.GetEnvironmentVariable("JWT_DurationInMinutes"), out var duration) ? duration : 60
 };
 
+var awsSettings = new AwsSettings
+{
+    AWS_ACCESS_KEY = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY") ?? throw new ArgumentException("AWS_ACESS_KEY is not set in environment variables"),
+    AWS_SECRET_KEY = Environment.GetEnvironmentVariable("AWS_SECRET_KEY") ?? throw new ArgumentException("AWS_SECRET_KEY is not set in environment variables"),
+    AWS_REGION = Environment.GetEnvironmentVariable("AWS_REGION") ?? throw new ArgumentException("AWS_REGION is not set in environment variables"),
+    AWS_BUCKET_NAME = Environment.GetEnvironmentVariable("AWS_BUCKET_NAME") ?? throw new ArgumentException("AWS_BUCKET_NAME is not set in environment variables"),
+};
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -86,6 +95,8 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddSingleton(jwtSettings);
+builder.Services.AddSingleton(awsSettings);
 builder.Services.AddSingleton<IHostedService, ServiceBackground>();
 builder.Services.AddScoped<IMusicRepository, MusicRepository>();
 builder.Services.AddScoped<ISnapshotRepository, SnapshotRepository>();
@@ -96,8 +107,7 @@ builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IAlbumCreatedEvent, AlbumCreatedEvent>();
 builder.Services.AddScoped<IAlbumReaderRepository, AlbumReaderRepository>();
 builder.Services.AddScoped<ISingleMusicRepository, SingleMusicRepository>();
-
-builder.Services.AddSingleton(jwtSettings);
+builder.Services.AddScoped<IImageUploaderService, ImageUploaderService>();
 
 var app = builder.Build();
 

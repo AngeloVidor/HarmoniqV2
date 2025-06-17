@@ -57,6 +57,7 @@ namespace Music.API.Infrastructure.Messaging
                         };
 
                         await _producerSnapRepo.SaveAsync(snapshot);
+                        System.Console.WriteLine("Saved");
                         _channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
                     }
                 }

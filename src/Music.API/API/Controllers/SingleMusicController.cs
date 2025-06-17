@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Music.API.Application.Commands.SingleMusic;
 using Music.API.Domain.Exceptions;
+using Music.API.Domain.Interfaces;
 
 namespace Music.API.API.Controllers
 {
@@ -15,10 +16,12 @@ namespace Music.API.API.Controllers
     public class SingleMusicController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IImageUploaderService _imageUploader;
 
-        public SingleMusicController(IMediator mediator)
+        public SingleMusicController(IMediator mediator, IImageUploaderService imageUploader)
         {
             _mediator = mediator;
+            _imageUploader = imageUploader;
         }
 
 
@@ -35,7 +38,9 @@ namespace Music.API.API.Controllers
                 return Unauthorized("User ID is required.");
             }
 
-            var commandWithUser = command with { UserId = userId };
+            string url = await _imageUploader.UploadAsync(command.Image);
+
+            var commandWithUser = command with { UserId = userId, ImageUrl = url };
 
             try
             {
@@ -49,5 +54,5 @@ namespace Music.API.API.Controllers
 
         }
     }
-
 }
+

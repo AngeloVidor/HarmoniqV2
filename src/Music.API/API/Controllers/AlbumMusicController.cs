@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Music.API.Application.Commands;
 using Music.API.Application.Queries;
 using Music.API.Domain.Exceptions;
+using Music.API.Domain.Interfaces;
 
 namespace Music.API.API.Controllers
 {
@@ -15,10 +16,12 @@ namespace Music.API.API.Controllers
     public class AlbumMusicController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IImageUploaderService _imageUploader;
 
-        public AlbumMusicController(IMediator mediator)
+        public AlbumMusicController(IMediator mediator, IImageUploaderService imageUploader)
         {
             _mediator = mediator;
+            _imageUploader = imageUploader;
         }
 
         [HttpPost("v2/add")]
@@ -33,8 +36,9 @@ namespace Music.API.API.Controllers
             {
                 return Unauthorized("User ID is required.");
             }
+            string url = await _imageUploader.UploadAsync(command.Image);
 
-            var commandWithUser = command with { UserId = userId };
+            var commandWithUser = command with { UserId = userId, ImageUrl = url };
 
             try
             {
@@ -43,7 +47,7 @@ namespace Music.API.API.Controllers
             }
             catch (ProducerNotFoundException ex)
             {
-                return BadRequest(new { message = ex.Message }); 
+                return BadRequest(new { message = ex.Message });
             }
             catch (AlbumNotFoundException ex)
             {
