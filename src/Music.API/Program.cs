@@ -95,6 +95,7 @@ builder.Services.AddSingleton<IHostedService, AlbumCreatedConsumerBackground>();
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IAlbumCreatedEvent, AlbumCreatedEvent>();
 builder.Services.AddScoped<IAlbumReaderRepository, AlbumReaderRepository>();
+builder.Services.AddScoped<ISingleMusicRepository, SingleMusicRepository>();
 
 builder.Services.AddSingleton(jwtSettings);
 

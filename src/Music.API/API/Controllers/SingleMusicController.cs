@@ -1,28 +1,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Music.API.Application.Commands;
-using Music.API.Application.Queries;
+using Music.API.Application.Commands.SingleMusic;
 using Music.API.Domain.Exceptions;
 
 namespace Music.API.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MusicController : ControllerBase
+    public class SingleMusicController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public MusicController(IMediator mediator)
+        public SingleMusicController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpPost("add")]
-        public async Task<IActionResult> AddMusic([FromForm] AddMusicCommand command)
+
+        [HttpPost("v2/add")]
+        public async Task<IActionResult> AddSingleMusic([FromForm] AddSingleMusicCommand command)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -43,17 +44,10 @@ namespace Music.API.API.Controllers
             }
             catch (ProducerNotFoundException ex)
             {
-                return BadRequest(new { message = ex.Message }); 
-            }
-            catch (AlbumNotFoundException ex)
-            {
-                return NotFound(new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Internal server error: " + ex.Message);
+                return BadRequest(new { message = ex.Message });
             }
 
         }
     }
+
 }

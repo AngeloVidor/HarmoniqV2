@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Music.API.Domain.Aggregates
 {
-    public class Music
+    public class AlbumMusic
     {
         [Key]
         public Guid Id { get; set; }
@@ -19,7 +19,7 @@ namespace Music.API.Domain.Aggregates
         public DateTime UploadedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
-        public Music(Guid producerId, Guid albumId, string? imageUrl, string title, string description)
+        public AlbumMusic(Guid producerId, Guid albumId, string? imageUrl, string title, string description)
         {
             Id = Guid.NewGuid();
             ProducerId = producerId;

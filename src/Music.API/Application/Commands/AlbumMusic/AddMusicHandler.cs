@@ -25,16 +25,14 @@ namespace Music.API.Application.Commands
         public async Task<Guid> Handle(AddMusicCommand request, CancellationToken cancellationToken)
         {
             var producer = await _mediator.Send(new GetProducerByUserIdQuery(request.UserId));
-
             if (producer == null)
                 throw new ProducerNotFoundException();
 
             var album = await _albumReader.GetAlbumByIdAsync(request.AlbumId);
-
             if (album == null)
                 throw new AlbumNotFoundException();
 
-            var music = new Domain.Aggregates.Music
+            var music = new Domain.Aggregates.AlbumMusic
             (
                 producer.ProducerId,
                 request.AlbumId,
