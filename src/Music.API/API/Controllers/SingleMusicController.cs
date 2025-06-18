@@ -4,8 +4,10 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Music.API.Application.Commands.SingleMusic;
+using Music.API.Application.Queries.SingleMusic;
 using Music.API.Domain.Exceptions;
 using Music.API.Domain.Interfaces;
 
@@ -51,7 +53,30 @@ namespace Music.API.API.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
+        }
 
+        [HttpGet("v2/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetSingleMusicById(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return BadRequest("Music ID cannot be empty.");
+            }
+
+            try
+            {
+                var singleMusic = await _mediator.Send(new GetSingleMusicByIdQuery(id));
+                return Ok(singleMusic);
+            }
+            catch (MusicNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
     }
 }

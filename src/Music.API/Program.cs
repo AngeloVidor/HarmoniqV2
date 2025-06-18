@@ -108,6 +108,7 @@ builder.Services.AddScoped<IAlbumCreatedEvent, AlbumCreatedEvent>();
 builder.Services.AddScoped<IAlbumReaderRepository, AlbumReaderRepository>();
 builder.Services.AddScoped<ISingleMusicRepository, SingleMusicRepository>();
 builder.Services.AddScoped<IImageUploaderService, ImageUploaderService>();
+builder.Services.AddScoped<ISingleMusicReaderRepository, SingleMusicReaderRepository>();
 
 var app = builder.Build();
 
