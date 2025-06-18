@@ -30,5 +30,13 @@ namespace Music.API.Domain.Aggregates
             UploadedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
         }
+
+        public void Update(string? imageUrl, string title, string description)
+        {
+            ImageUrl = imageUrl;
+            Title = title;
+            Description = description;
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }
