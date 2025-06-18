@@ -8,6 +8,6 @@ namespace Music.API.Domain.Interfaces
 {
     public interface IAlbumReaderRepository
     {
-        Task<Album> GetAlbumByIdAsync(Guid id);
+        Task<Album> GetAlbumByIdAsync(Guid id, Guid producerId);
     }
 }

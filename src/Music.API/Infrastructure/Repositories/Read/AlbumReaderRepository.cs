@@ -18,9 +18,9 @@ namespace Music.API.Infrastructure.Repositories.Read
             _dbContext = dbContext;
         }
 
-        public async Task<Album> GetAlbumByIdAsync(Guid id)
+        public async Task<Album> GetAlbumByIdAsync(Guid id, Guid producerId)
         {
-            return await _dbContext.AlbumSnapshots.FirstOrDefaultAsync(x => x.AlbumId == id);
+            return await _dbContext.AlbumSnapshots.FirstOrDefaultAsync(x => x.AlbumId == id && x.ProducerId == producerId);
         }
     }
 }

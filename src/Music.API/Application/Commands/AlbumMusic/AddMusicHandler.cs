@@ -28,7 +28,7 @@ namespace Music.API.Application.Commands
             if (producer == null)
                 throw new ProducerNotFoundException();
 
-            var album = await _albumReader.GetAlbumByIdAsync(request.AlbumId);
+            var album = await _albumReader.GetAlbumByIdAsync(request.AlbumId, producer.ProducerId);
             if (album == null)
                 throw new AlbumNotFoundException();
 
