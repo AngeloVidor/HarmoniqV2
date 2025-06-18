@@ -26,5 +26,12 @@ namespace Music.API.Domain.Aggregates
             ProducerId = producerId;
             AddedAt = DateTime.UtcNow;
         }
+
+        public void Update(string? imageUrl, string title, string description)
+        {
+            ImageUrl = imageUrl;
+            Title = title;
+            Description = description;
+        }
     }
 }

@@ -78,6 +78,42 @@ namespace Music.API.API.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
+
+        [HttpPut("v2/update")]
+        public async Task<IActionResult> UpdateSingleMusic([FromForm] UpdateSingleMusicCommand command)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            Guid userId = HttpContext.Items["userId"] as Guid? ?? Guid.Empty;
+
+            if (userId == Guid.Empty)
+            {
+                return Unauthorized("User ID is required.");
+            }
+
+            string? url = null;
+            if (command.Image != null)
+            {
+                url = await _imageUploader.UploadAsync(command.Image);
+            }
+
+            var commandWithUser = command with { UserId = userId, ImageUrl = url };
+
+            try
+            {
+                var result = await _mediator.Send(commandWithUser);
+                return Ok(result);
+            }
+            catch (ProducerNotFoundException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (MusicNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
     }
 }
 

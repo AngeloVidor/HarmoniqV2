@@ -9,5 +9,6 @@ namespace Music.API.Domain.Interfaces
     public interface ISingleMusicReaderRepository
     {
         Task<SingleMusic> GetSingleMusicByIdAsync(Guid id);
+        Task<SingleMusic> GetProducerSingleMusicById(Guid producerId, Guid musicId);
     }
 }

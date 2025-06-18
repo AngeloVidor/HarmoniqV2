@@ -18,6 +18,12 @@ namespace Music.API.Infrastructure.Repositories.Read
             _dbContext = dbContext;
         }
 
+        public async Task<SingleMusic> GetProducerSingleMusicById(Guid producerId, Guid musicId)
+        {
+            return await _dbContext.SingleMusics
+                .FirstOrDefaultAsync(x => x.Id == musicId && x.ProducerId == producerId);
+        }
+
         public async Task<SingleMusic> GetSingleMusicByIdAsync(Guid id)
         {
             return await _dbContext.SingleMusics

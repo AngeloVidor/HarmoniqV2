@@ -9,5 +9,6 @@ namespace Music.API.Domain.Interfaces
     public interface ISingleMusicRepository
     {
         Task AddAsync(SingleMusic music);
+        Task UpdateAsync(SingleMusic music);
     }
 }
