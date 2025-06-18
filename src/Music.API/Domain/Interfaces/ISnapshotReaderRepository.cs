@@ -9,5 +9,7 @@ namespace Music.API.Domain.Interfaces
     public interface ISnapshotReaderRepository
     {
         Task<Producer> GetProducerByUserIdAsync(Guid userId);
+        Task<Producer> GetProducerByIdAsync(Guid producerId);
+
     }
 }

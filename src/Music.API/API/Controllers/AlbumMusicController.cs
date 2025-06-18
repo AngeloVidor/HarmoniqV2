@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Music.API.Application.Commands;
 using Music.API.Application.Queries;
+using Music.API.Application.Queries.AlbumMusics;
 using Music.API.Domain.Exceptions;
 using Music.API.Domain.Interfaces;
 
@@ -57,7 +59,30 @@ namespace Music.API.API.Controllers
             {
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
+        }
 
+        [HttpGet("v2/{albumId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAlbumMusics(Guid albumId, Guid producerId)
+        {
+            try
+            {
+                var query = new GetAlbumMusicsQuery(albumId, producerId);
+                var albumMusics = await _mediator.Send(query);
+                return Ok(albumMusics);
+            }
+            catch (AlbumNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (AlbumMusicsNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
     }
 }
