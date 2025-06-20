@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Product.API.Domain.Aggregates;
 using Product.API.Domain.Interfaces;
+using Product.API.Domain.ValueObjects;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -52,8 +53,8 @@ namespace Product.API.Infrastructure.Messaging
                             var product = new AlbumProduct(request.AlbumId, request.ProducerId, request.Title, request.Description, request.Price, request.ImageUrl);
                             await productRepository.SaveAsync(product);
                             var createdProduct = await CreateStripeProductAsync(product);
-                            await persistence.SaveAsync(createdProduct);
-                            
+                            var domainProduct = MapToDomainProduct(createdProduct);
+                            await persistence.SaveAsync(domainProduct);
 
                             _channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
                         }
@@ -69,16 +70,30 @@ namespace Product.API.Infrastructure.Messaging
             return Task.CompletedTask;
         }
 
-        private async Task<Domain.Aggregates.Product> CreateStripeProductAsync(AlbumProduct product)
+        private async Task<StripeProductResult> CreateStripeProductAsync(AlbumProduct product)
         {
             var stripeProduct = new Domain.Aggregates.Product(product.Title, product.Description, product.Price);
 
-            using (var scope = _serviceScopeFactory.CreateScope())
+            using var scope = _serviceScopeFactory.CreateScope();
+            var productService = scope.ServiceProvider.GetRequiredService<IProductService>();
+            var (productId, priceId) = await productService.CreateProductAsync(stripeProduct);
+
+            return new StripeProductResult
             {
-                var productService = scope.ServiceProvider.GetRequiredService<IProductService>();
-                var (productId, priceId) = await productService.CreateProductAsync(stripeProduct);
-            }
-            return stripeProduct;
+                Product = stripeProduct,
+                StripeProductId = productId,
+                StripePriceId = priceId
+            };
+        }
+
+        private Domain.Aggregates.Product MapToDomainProduct(StripeProductResult productResult)
+        {
+            return new Domain.Aggregates.Product(
+                productResult.Product.Name,
+                productResult.Product.Description,
+                productResult.Product.Price,
+                productResult.StripeProductId,
+                productResult.StripePriceId);
         }
     }
 }
