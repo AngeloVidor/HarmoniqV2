@@ -47,8 +47,14 @@ namespace Product.API.Infrastructure.Messaging
                         using (var scope = _serviceScopeFactory.CreateScope())
                         {
                             var productRepository = scope.ServiceProvider.GetRequiredService<IAlbumProductRepository>();
+                            var persistence = scope.ServiceProvider.GetRequiredService<IProductRepository>();
+
                             var product = new AlbumProduct(request.AlbumId, request.ProducerId, request.Title, request.Description, request.Price, request.ImageUrl);
                             await productRepository.SaveAsync(product);
+                            var createdProduct = await CreateStripeProductAsync(product);
+                            await persistence.SaveAsync(createdProduct);
+                            
+
                             _channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
                         }
                     }
@@ -61,6 +67,18 @@ namespace Product.API.Infrastructure.Messaging
             };
             _channel.BasicConsume(queue: "album.product.created.queue", autoAck: false, consumer: consumer);
             return Task.CompletedTask;
+        }
+
+        private async Task<Domain.Aggregates.Product> CreateStripeProductAsync(AlbumProduct product)
+        {
+            var stripeProduct = new Domain.Aggregates.Product(product.Title, product.Description, product.Price);
+
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var productService = scope.ServiceProvider.GetRequiredService<IProductService>();
+                var (productId, priceId) = await productService.CreateProductAsync(stripeProduct);
+            }
+            return stripeProduct;
         }
     }
 }

@@ -5,7 +5,10 @@ using Product.API.Infrastructure.Data;
 using Product.API.Infrastructure.Messaging;
 using Product.API.Infrastructure.Messaging.Backgrorund;
 using Product.API.Infrastructure.Repositories.Write;
+using Product.API.Infrastructure.Services;
+using Product.API.Models;
 
+DotNetEnv.Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,10 +24,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+var stripe = new StripeSettings()
+{
+    SecretKey = Environment.GetEnvironmentVariable("Secret_Key") ?? throw new InvalidOperationException("Secret_Key environment variable is not set."),
+    PublishableKey = Environment.GetEnvironmentVariable("Publishable_Key") ?? throw new InvalidOperationException("Publishable_Key environment variable is not set.")
+};
+
+builder.Services.AddSingleton(stripe);
 
 builder.Services.AddSingleton<IHostedService, ServiceBackground>();
 builder.Services.AddScoped<IAlbumProductRepository, AlbumProductRepository>();
 builder.Services.AddScoped<IAlbumCreatedEvent, AlbumCreatedEvent>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddSingleton(new Stripe.ProductService());
+builder.Services.AddSingleton(new Stripe.PriceService());
+
 
 var app = builder.Build();
 
