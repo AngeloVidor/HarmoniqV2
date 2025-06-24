@@ -3,6 +3,7 @@ using System.Text;
 using Consumer.API.API.Middlewares;
 using Consumer.API.Domain.Interfaces;
 using Consumer.API.Infrastructure.Data;
+using Consumer.API.Infrastructure.Messaging;
 using Consumer.API.Infrastructure.Repositories.Read;
 using Consumer.API.Infrastructure.Repositories.Write;
 using Consumer.API.Models;
@@ -93,6 +94,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IConsumerRepository, ConsumerRepository>();
 builder.Services.AddScoped<IConsumerReadRepository, ConsumerReadRepository>();
+builder.Services.AddScoped<IConsumerCreatedEvent, ConsumerCreatedEvent>();
 
 var app = builder.Build();
 

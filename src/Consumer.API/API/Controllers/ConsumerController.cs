@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Consumer.API.Application.Commands;
 using Consumer.API.Domain.Exceptions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Consumer.API.API.Controllers
@@ -21,6 +22,7 @@ namespace Consumer.API.API.Controllers
         }
 
         [HttpPost("v2/add")]
+        [Authorize(Roles = "Consumer")]
         public async Task<IActionResult> AddConsumer([FromForm] AddConsumerCommand command)
         {
             if (command == null)

@@ -16,10 +16,11 @@ namespace Consumer.API.Infrastructure.Repositories.Write
             _dbContext = dbContext;
         }
 
-        public async Task AddAsync(Domain.Aggregates.Consumer consumer)
+        public async Task<bool> AddAsync(Domain.Aggregates.Consumer consumer)
         {
             await _dbContext.AddAsync(consumer);
-            await _dbContext.SaveChangesAsync();
+            int lines = await _dbContext.SaveChangesAsync();
+            return lines > 0;
         }
     }
 }

@@ -7,6 +7,6 @@ namespace Consumer.API.Domain.Interfaces
 {
     public interface IConsumerRepository
     {
-        Task AddAsync(Domain.Aggregates.Consumer consumer);
+        Task<bool> AddAsync(Domain.Aggregates.Consumer consumer);
     }
 }
