@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "XDrrLI0haSFfKbuuhiIvFxZeHiw0WwtM1UD3vY8cWo4=",
+  "Source": "Consumer.API",
+  "BasePath": "_content/Consumer.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
