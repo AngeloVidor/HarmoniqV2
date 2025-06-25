@@ -1,9 +1,13 @@
 using System.Reflection;
+using System.Text;
+using Cart.API.API.Middlewares;
 using Cart.API.Domain.Interfaces;
 using Cart.API.Infrastructure.Data;
 using Cart.API.Infrastructure.Messaging;
 using Cart.API.Infrastructure.Messaging.Background;
+using Cart.API.Infrastructure.Repositories.Read;
 using Cart.API.Infrastructure.Repositories.Write;
+using Cart.API.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -56,41 +60,46 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-// var jwtSettings = new JwtSettings()
-// {
-//     JWT_KEY = Environment.GetEnvironmentVariable("JWT_KEY") ?? throw new ArgumentNullException("JWT_KEY is not set in environment variables."),
-//     JWT_ISSUER = Environment.GetEnvironmentVariable("JWT_ISSUER") ?? throw new ArgumentNullException("JWT_ISSUER is not set in environment variables."),
-//     JWT_AUDIENCE = Environment.GetEnvironmentVariable("JWT_AUDIENCE") ?? throw new ArgumentNullException("JWT_AUDIENCE is not set in environment variables."),
-//     JWT_DurationInMinutes = int.TryParse(Environment.GetEnvironmentVariable("JWT_DURATION_IN_MINUTES"), out var duration) ? duration : 60
-// };
+var jwtSettings = new JwtSettings()
+{
+    JWT_KEY = Environment.GetEnvironmentVariable("JWT_KEY") ?? throw new ArgumentNullException("JWT_KEY is not set in environment variables."),
+    JWT_ISSUER = Environment.GetEnvironmentVariable("JWT_ISSUER") ?? throw new ArgumentNullException("JWT_ISSUER is not set in environment variables."),
+    JWT_AUDIENCE = Environment.GetEnvironmentVariable("JWT_AUDIENCE") ?? throw new ArgumentNullException("JWT_AUDIENCE is not set in environment variables."),
+    JWT_DurationInMinutes = int.TryParse(Environment.GetEnvironmentVariable("JWT_DURATION_IN_MINUTES"), out var duration) ? duration : 60
+};
 
-// builder.Services.AddSingleton(jwtSettings);
+builder.Services.AddSingleton(jwtSettings);
 
-// builder.Services.AddAuthentication(options =>
-// {
-//     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-// })
-// .AddJwtBearer(options =>
-// {
-//     options.TokenValidationParameters = new TokenValidationParameters
-//     {
-//         ValidateIssuer = true,
-//         ValidateAudience = true,
-//         ValidateLifetime = true,
-//         ValidateIssuerSigningKey = true,
-//         ValidIssuer = jwtSettings.JWT_ISSUER,
-//         ValidAudience = jwtSettings.JWT_AUDIENCE,
-//         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.JWT_KEY)),
-//         ClockSkew = TimeSpan.Zero
-//     };
-// });
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings.JWT_ISSUER,
+        ValidAudience = jwtSettings.JWT_AUDIENCE,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.JWT_KEY)),
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 builder.Services.AddAuthorization();
 
 builder.Services.AddSingleton<IHostedService, ConsumerBackground>();
 builder.Services.AddScoped<IConsumerRepository, ConsumerRepository>();
 builder.Services.AddScoped<IConsumerCreatedEvent, ConsumerCreatedEvent>();
+builder.Services.AddScoped<IConsumerReadRepository, ConsumerReadRepository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICartReaderRepository, CartReaderRepository>();
+
+
 
 var app = builder.Build();
 
@@ -103,7 +112,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
-//app.UseMiddleware<JwtAuthMiddleware>();
+app.UseMiddleware<JwtAuthMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 
