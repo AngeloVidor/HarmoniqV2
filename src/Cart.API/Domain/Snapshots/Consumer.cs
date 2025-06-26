@@ -13,6 +13,8 @@ namespace Cart.API.Domain.Snapshots
         public Guid ConsumerId { get; private set; }
         public Guid UserId { get; private set; }
         public string Name { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime UpdatedAt { get; private set; }
 
         public Consumer(Guid consumerId, Guid userId, string name)
         {
@@ -20,6 +22,8 @@ namespace Cart.API.Domain.Snapshots
             ConsumerId = consumerId;
             UserId = userId;
             Name = name;
+            CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
         }
     }
 }

@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cart.API.Infrastructure.Repositories.Read
 {
-    public class ConsumerReadRepository : IConsumerReadRepository
+    public class ConsumerReaderRepository : IConsumerReaderRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public ConsumerReadRepository(ApplicationDbContext dbContext)
+        public ConsumerReaderRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

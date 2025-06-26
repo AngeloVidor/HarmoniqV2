@@ -6,7 +6,7 @@ using Cart.API.Domain.Snapshots;
 
 namespace Cart.API.Domain.Interfaces
 {
-    public interface IConsumerReadRepository
+    public interface IConsumerReaderRepository
     {
         Task<Consumer> GetByIdAsync(Guid consumerId);
         Task<Consumer> GetConsumerByUserIdAsync(Guid userId);

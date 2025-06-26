@@ -4,6 +4,7 @@ using Product.API.Domain.Interfaces;
 using Product.API.Infrastructure.Data;
 using Product.API.Infrastructure.Messaging;
 using Product.API.Infrastructure.Messaging.Backgrorund;
+using Product.API.Infrastructure.Repositories.Read;
 using Product.API.Infrastructure.Repositories.Write;
 using Product.API.Infrastructure.Services;
 using Product.API.Models;
@@ -39,6 +40,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddSingleton(new Stripe.ProductService());
 builder.Services.AddSingleton(new Stripe.PriceService());
+builder.Services.AddScoped<IProductReaderRepository, ProductReaderRepository>();
 
 
 var app = builder.Build();

@@ -95,9 +95,11 @@ builder.Services.AddAuthorization();
 builder.Services.AddSingleton<IHostedService, ConsumerBackground>();
 builder.Services.AddScoped<IConsumerRepository, ConsumerRepository>();
 builder.Services.AddScoped<IConsumerCreatedEvent, ConsumerCreatedEvent>();
-builder.Services.AddScoped<IConsumerReadRepository, ConsumerReadRepository>();
+builder.Services.AddScoped<IConsumerReaderRepository, ConsumerReaderRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartReaderRepository, CartReaderRepository>();
+builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+builder.Services.AddHttpClient();
 
 
 

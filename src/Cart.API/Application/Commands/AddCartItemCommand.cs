@@ -1,0 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using MediatR;
+
+namespace Cart.API.Application.Commands
+{
+    public record AddCartItemCommand(Guid ProductId, Guid UserId) : IRequest<bool>;
+
+
+}

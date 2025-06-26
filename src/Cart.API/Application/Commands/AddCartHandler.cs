@@ -10,29 +10,27 @@ namespace Cart.API.Application.Commands
 {
     public class AddCartHandler : IRequestHandler<AddCartCommand, Guid>
     {
-        private readonly IConsumerReadRepository _consumerReadRepository;
+        private readonly IConsumerReaderRepository _consumerReaderRepository;
         private readonly ICartRepository _cartRepository;
-        private readonly ICartReaderRepository _cartReadeRepository;
+        private readonly ICartReaderRepository _cartReaderRepository;
 
-        public AddCartHandler(IConsumerReadRepository consumerReadRepository, ICartRepository cartRepository, ICartReaderRepository cartReadeRepository)
+        public AddCartHandler(IConsumerReaderRepository consumerReaderRepository, ICartRepository cartRepository, ICartReaderRepository cartReaderRepository)
         {
-            _consumerReadRepository = consumerReadRepository;
+            _consumerReaderRepository = consumerReaderRepository;
             _cartRepository = cartRepository;
-            _cartReadeRepository = cartReadeRepository;
+            _cartReaderRepository = cartReaderRepository;
         }
 
         public async Task<Guid> Handle(AddCartCommand request, CancellationToken cancellationToken)
         {
-            Console.WriteLine(request.UserId);
-
-            var consumer = await _consumerReadRepository.GetConsumerByUserIdAsync(request.UserId);
+            var consumer = await _consumerReaderRepository.GetConsumerByUserIdAsync(request.UserId);
             if (consumer == null)
                 throw new ConsumerNotFoundException();
 
-            var existingCart = await _cartReadeRepository.GetCartByConsumerIdAsync(consumer.ConsumerId);
+            var existingCart = await _cartReaderRepository.GetCartByConsumerIdAsync(consumer.ConsumerId);
             if (existingCart != null && existingCart.IsActive)
                 throw new CannotCreateCartWhenAlreadyActiveException();
-                
+
             var cart = new Domain.Aggregates.Cart(consumer.ConsumerId);
 
             await _cartRepository.AddAsync(cart);

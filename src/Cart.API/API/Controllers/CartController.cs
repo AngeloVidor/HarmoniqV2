@@ -29,9 +29,6 @@ namespace Cart.API.API.Controllers
             if (!HttpContext.Items.TryGetValue("userId", out var userIdObj) || userIdObj is not Guid userId || userId == Guid.Empty)
                 return BadRequest("User is not authenticated.");
 
-            System.Console.WriteLine(userId);
-
-
             try
             {
                 var commandWithConsumer = command with { UserId = userId };
